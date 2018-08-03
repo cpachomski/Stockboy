@@ -1,58 +1,24 @@
-/*
-if you add the dollar sign while talking stock boy bot will return a 
-stock view for that information and a link to open the stock on robinhood
-  - get information from iex
-  - 
+const Telegraf = require("telegraf");
+const express = require("express");
+const controller = require("./controller");
 
-*/
+const stockboy = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
+const app = express();
 
-const Bot = require('node-telegram-bot-api');
-
-let stockboy;
-const token = process.env.TELEGRAM_BOT_TOKEN;
-const useWebHook = process.env.NODE_ENV === 'production';
-const { getStocksBySymbols } = require('./fetchers/stocks');
-
-if (useWebHook) {
-  stockboy = new Bot(token);
-  stockboy.setWebhook(`${process.env.APP_ENDPOINT}/${token}`);
+if (process.env.NODE_ENV === "production") {
+  stockboy.telegram.setWebhook(
+    "https://silly-husky-24.localtunnel.me/stockboy"
+  );
+  app.use(stockboy.webhookCallback("/stockboy"));
 } else {
-  stockboy = new Bot(token, { polling: true });
+  stockboy.startPolling();
 }
+controller(stockboy);
 
-const regExs = {
-  stockSymbol: /\$[a-zA-Z]{1,4}/g
-};
-
-const commands = {};
-
-const triggers = {
-  stockSymbolsInMessage: {
-    trigger: regExs.stockSymbol,
-    handler: msg => {
-      const symbols = msg.text
-        .match(regExs.stockSymbol)
-        .map(s => s.replace('$', ''));
-
-      getStocksBySymbols(symbols, ['quote', 'news']).then(data => {
-        console.log(data);
-        return data;
-      });
-    }
+app.listen(process.env.PORT, err => {
+  if (err) {
+    throw new Error(err);
   }
-};
 
-// Object.entries(triggers).forEach(t => {
-//   const { trigger, handler } = t[1];
-
-stockboy.onText(/\$[a-zA-Z]{1,4}/g, msg => {
-  const symbols = msg.text
-    .match(regExs.stockSymbol)
-    .map(s => s.replace('$', ''));
-
-  getStocksBySymbols(symbols, ['quote', 'news']).then(data => {
-    console.log(data);
-    return data;
-  });
+  console.log(`\n  Stockboy at your service 👦\n`);
 });
-// });
