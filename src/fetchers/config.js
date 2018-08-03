@@ -1,3 +1,3 @@
 module.exports = {
-  iexBase: 'https://api.iextrading.com/1.0'
+  IEX_BASE_URI: "https://api.iextrading.com/1.0"
 };
