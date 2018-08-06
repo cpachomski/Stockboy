@@ -1,4 +1,4 @@
-const triggers = require("./triggers");
+const triggers = require("./stock");
 
 module.exports = stockboy => {
   Object.entries(triggers).forEach(t => {
