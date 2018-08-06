@@ -18,9 +18,8 @@ module.exports = {
 
         const stocksData = await getStocksBySymbols(symbols, ["quote", "news"]);
         const html = renderQuotes(stocksData);
-        console.log(html);
+
         if (!html) {
-          console.log(html);
           const failReply = `[INVALID SYMBOL]\n  "${getRandomInsult()}" - 👦`;
           return ctx.reply(failReply);
         }

@@ -3,6 +3,7 @@ const moment = require("moment");
 const renderSymbol = s => `
     <b>${s.toUpperCase()}</b>
 `;
+
 const renderArticle = a => `
     <b>${a.source}</b> 
     <a href="${a.url}" style="font-size: 9px;">${a.headline}</a>
@@ -16,10 +17,10 @@ const renderQuote = (s, q) => `
     <i>Latest Quote:</i>   <b>$${q.latestPrice}</b>
     <i>Today's High:</i>   <b>$${q.high}</b>
     <i>Today's Low:</i>    <b>$${q.low}</b>
-    <i>52 High:</i>            <b>$${q.week52High}</b>
-    <i>52 Low:</i>             <b>$${q.week52Low}</b>    
-    <i>Open:</i>                <b>$${q.open}</b>
-    <i>Close:</i>                <b>$${q.close}</b>
+    <i>52 High:</i>           <b>$${q.week52High}</b>
+    <i>52 Low:</i>            <b>$${q.week52Low}</b>    
+    <i>Open:</i>               <b>$${q.open}</b>
+    <i>Close:</i>               <b>$${q.close}</b>
     <i>-------------------------------</i>
 `;
 
