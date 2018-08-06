@@ -29,6 +29,7 @@ const renderQuotes = stocksData => {
     return false;
   }
 
+  // necessary filler tag otherwise telegram will literally inject 'undefined' into the template.
   let view = "<i>\n</i>";
   Object.entries(stocksData).forEach(stock => {
     const symbol = stock[0];
