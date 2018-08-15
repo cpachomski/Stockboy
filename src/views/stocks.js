@@ -13,7 +13,8 @@ const renderArticle = a => `
 const renderQuote = (s, q) => `
     <b> 🔔 ${s.toUpperCase()} 🔔 </b>
     <i>-------------------------------</i>
-    <i>% Change: </i>       <b>${q.changePercent * 100}%</b>
+    <i>% Change:</i>          <b>${(q.changePercent * 100).toFixed(2)}%</b>
+    <i>Change:</i>           <b>$${q.change}</b>
     <i>Latest Quote:</i>   <b>$${q.latestPrice}</b>
     <i>Today's High:</i>   <b>$${q.high}</b>
     <i>Today's Low:</i>    <b>$${q.low}</b>
@@ -21,6 +22,7 @@ const renderQuote = (s, q) => `
     <i>52 Low:</i>            <b>$${q.week52Low}</b>    
     <i>Open:</i>               <b>$${q.open}</b>
     <i>Close:</i>               <b>$${q.close}</b>
+    <i>Market Cap:</i>      <b>$${q.marketCap.toLocaleString()}</b>
     <i>-------------------------------</i>
 `;
 

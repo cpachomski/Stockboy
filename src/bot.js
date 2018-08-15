@@ -1,7 +1,7 @@
 const axios = require("axios");
 const Telegraf = require("telegraf");
 const express = require("express");
-const controller = require("./controller");
+const { initBotListeners } = require("./controller");
 
 const PORT = 3000;
 const stockboy = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === "production") {
         setTimeout(() => {
           stockboy.telegram.setWebhook(`${process.env.NOW_URL}/stockboy`);
           app.use(stockboy.webhookCallback("/stockboy"));
-          controller(stockboy);
+          initBotListeners(stockboy);
         }, 5000);
       }
     })
@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === "production") {
     });
 } else {
   stockboy.startPolling();
-  controller(stockboy);
+  initBotListeners(stockboy);
 }
 
 app.get("/health", (req, res) => {
